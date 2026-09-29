@@ -1,0 +1,21 @@
+{
+  "session_split.csv": "fc6bb347c8fd75195e916ce68807782105b4f53249165943725a87737d3a17ec",
+  "stitched_test.json.gz": "0003ff39495c96f39a301bb59fbc7e0dbcd9d6044ffe7314459f6b7051eed65a",
+  "targets.npz": "8c8d0c3be5e1abb4bc5ae62f2057c60af42d91d12981afb3a46c69ab087c81c0",
+  "recordings.json.gz": "e43a72b3d0514dbd4cc88ba5cec7548629e6c646e9ef489531457bd9e019ca94",
+  "sentences.csv": "19daae61bd77b3deeeb9c1c001951ead7d8fcc82436d77ceb165eada52966f6a",
+  "pronunciations.dict": "76f1bb697a49dc65f8acb079597ddd8ca66246d298868079e68efbdafd1702c9",
+  "groups.json.gz": "242c07aa1d3ce1e9de4e26e4dbfc772b0e34d4aba99310780b19ce9b3c1e8781",
+  "stitched_val.json.gz": "91e950abfb08135f90560301c0161ba40e9b070ff01a038d5355fc414f846b97",
+  "downloads.json": "b3fe11ffa6493ab16d6af2a2cbaa436abb1491b8b7e54433e0701775b0162826",
+  "pos_tags.json": "96775d8f5c11c9619e76df51a76ce08c2feac3115fad4ef2a3f89d2e241d8612",
+  "prompt_settings.json": "7e7c728bd4ff8866cfc497c356553039e11d17f8c9d4801de011002e5e7ca448",
+  "vocabularies.json": "ee866ce936c5dfa6e8fca86027aa57b7ce8df9179afb733a9b9c19304d6c65d8",
+  "baseline_settings.json": "28abc8a7efc009fc82d8c901b3e8b91bd15011443bf3547023f6294e6fb67160",
+  "experiment.json": "d1c1bd29ef2d1143eb528b62b2cc7a8d27672a019426b0a7087c2180b25fa4fb",
+  "natural.json.gz": "49a8f5a88205683dc4adca2ff84cd99c6e88c604d32d6d7fcac318493b2fe0b0",
+  "stitched_dev.json": "988c103426334ab131150eca838b6c27913bd769dedf280f4e3654ed35a42588",
+  "stitched_train.json.gz": "dbeef3af5b0bfd22cf81ddd9c673ee26a687ab4de6f4056e77b83349ec3c3a59",
+  "positions.npy": "1b794599b2aacb84d851c3248f29e0fd497a5f95bf21b72368a54ff2fccff5cd",
+  "development_sentences.json": "09d8d8ff7521454492e221a36353b14a0cc4f558f25024e41e40e3d9d2fd8fca"
+}

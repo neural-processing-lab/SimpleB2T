@@ -1,0 +1,40 @@
+{
+  "joint": {
+    "selected": {
+      "1": {
+        "temperature": 0.022908676527677724,
+        "weight": 4.0
+      },
+      "5": {
+        "temperature": 0.008317637711026709,
+        "weight": 8.0
+      }
+    },
+    "seeds": [
+      0,
+      100,
+      200,
+      300,
+      400
+    ],
+    "test_used": false
+  },
+  "stitched": {
+    "selected": {
+      "1": {
+        "temperature": 0.05754399373371572,
+        "weight": 2.0
+      },
+      "5": {
+        "temperature": 0.05754399373371572,
+        "weight": 2.0
+      }
+    },
+    "seeds": [
+      0,
+      100,
+      200
+    ],
+    "test_used": false
+  }
+}

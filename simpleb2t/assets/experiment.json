@@ -1,0 +1,636 @@
+{
+  "cnn": {
+    "name": "SimpleConvTimeAgg",
+    "time_agg_out": "att",
+    "dropout_input": 0.1,
+    "hidden": 160,
+    "batch_norm": true,
+    "depth": 5,
+    "dilation_period": 5,
+    "kernel_size": 3,
+    "skip": true,
+    "subject_layers": true,
+    "complex_out": false,
+    "glu": 2,
+    "glu_context": 1,
+    "merger": true,
+    "initial_linear": 512,
+    "gelu": true,
+    "merger_pos_dim": 2048,
+    "merger_per_subject": true,
+    "n_subjects": 1
+  },
+  "transformer": {
+    "name": "TransformerEncoder",
+    "depth": 16,
+    "heads": 16
+  },
+  "runs": {
+    "ours": {
+      "0": {
+        "training": {
+          "seed": 0,
+          "mlp_depth": 4,
+          "mlp_hidden": 2048,
+          "batch_size": 128,
+          "lr": 0.0001,
+          "max_epochs": 50,
+          "patience": 10,
+          "evaluation_vocabulary": "sentence_92",
+          "evaluation_aggregation": "mean_of_5_predictions",
+          "loss": {
+            "norm_kind": "y",
+            "temperature": true,
+            "bias": true,
+            "identical_candidates_threshold": 0.999,
+            "reweigh_positives": true
+          }
+        },
+        "stop_after_epoch": 19
+      },
+      "100": {
+        "training": {
+          "seed": 100,
+          "mlp_depth": 4,
+          "mlp_hidden": 2048,
+          "batch_size": 128,
+          "lr": 0.0001,
+          "max_epochs": 50,
+          "patience": 10,
+          "evaluation_vocabulary": "sentence_92",
+          "evaluation_aggregation": "mean_of_5_predictions",
+          "loss": {
+            "norm_kind": "y",
+            "temperature": true,
+            "bias": true,
+            "identical_candidates_threshold": 0.999,
+            "reweigh_positives": true
+          }
+        },
+        "stop_after_epoch": 21
+      },
+      "200": {
+        "training": {
+          "seed": 200,
+          "mlp_depth": 4,
+          "mlp_hidden": 2048,
+          "batch_size": 128,
+          "lr": 0.0001,
+          "max_epochs": 50,
+          "patience": 10,
+          "evaluation_vocabulary": "sentence_92",
+          "evaluation_aggregation": "mean_of_5_predictions",
+          "loss": {
+            "norm_kind": "y",
+            "temperature": true,
+            "bias": true,
+            "identical_candidates_threshold": 0.999,
+            "reweigh_positives": true
+          }
+        },
+        "stop_after_epoch": 19
+      },
+      "300": {
+        "training": {
+          "seed": 300,
+          "mlp_depth": 4,
+          "mlp_hidden": 2048,
+          "batch_size": 128,
+          "lr": 0.0001,
+          "max_epochs": 50,
+          "patience": 10,
+          "evaluation_vocabulary": "sentence_92",
+          "evaluation_aggregation": "mean_of_5_predictions",
+          "loss": {
+            "norm_kind": "y",
+            "temperature": true,
+            "bias": true,
+            "identical_candidates_threshold": 0.999,
+            "reweigh_positives": true
+          }
+        },
+        "stop_after_epoch": 20
+      },
+      "400": {
+        "training": {
+          "seed": 400,
+          "mlp_depth": 4,
+          "mlp_hidden": 2048,
+          "batch_size": 128,
+          "lr": 0.0001,
+          "max_epochs": 50,
+          "patience": 10,
+          "evaluation_vocabulary": "sentence_92",
+          "evaluation_aggregation": "mean_of_5_predictions",
+          "loss": {
+            "norm_kind": "y",
+            "temperature": true,
+            "bias": true,
+            "identical_candidates_threshold": 0.999,
+            "reweigh_positives": true
+          }
+        },
+        "stop_after_epoch": 18
+      }
+    },
+    "joint": {
+      "0": {
+        "training": {
+          "seed": 0,
+          "lr": 0.0001,
+          "batch_size": 128,
+          "max_epochs": 50,
+          "patience": 10,
+          "loss": {
+            "norm_kind": "y",
+            "temperature": true,
+            "bias": true,
+            "identical_candidates_threshold": 0.999,
+            "reweigh_positives": true
+          }
+        },
+        "stop_after_epoch": 24
+      },
+      "100": {
+        "training": {
+          "seed": 100,
+          "lr": 0.0001,
+          "batch_size": 128,
+          "max_epochs": 50,
+          "patience": 10,
+          "loss": {
+            "norm_kind": "y",
+            "temperature": true,
+            "bias": true,
+            "identical_candidates_threshold": 0.999,
+            "reweigh_positives": true
+          }
+        },
+        "stop_after_epoch": 18
+      },
+      "200": {
+        "training": {
+          "seed": 200,
+          "lr": 0.0001,
+          "batch_size": 128,
+          "max_epochs": 50,
+          "patience": 10,
+          "loss": {
+            "norm_kind": "y",
+            "temperature": true,
+            "bias": true,
+            "identical_candidates_threshold": 0.999,
+            "reweigh_positives": true
+          }
+        },
+        "stop_after_epoch": 20
+      },
+      "300": {
+        "training": {
+          "seed": 300,
+          "lr": 0.0001,
+          "batch_size": 128,
+          "max_epochs": 50,
+          "patience": 10,
+          "loss": {
+            "norm_kind": "y",
+            "temperature": true,
+            "bias": true,
+            "identical_candidates_threshold": 0.999,
+            "reweigh_positives": true
+          }
+        },
+        "stop_after_epoch": 18
+      },
+      "400": {
+        "training": {
+          "seed": 400,
+          "lr": 0.0001,
+          "batch_size": 128,
+          "max_epochs": 50,
+          "patience": 10,
+          "loss": {
+            "norm_kind": "y",
+            "temperature": true,
+            "bias": true,
+            "identical_candidates_threshold": 0.999,
+            "reweigh_positives": true
+          }
+        },
+        "stop_after_epoch": 20
+      }
+    },
+    "single_word": {
+      "0": {
+        "training": {
+          "seed": 0,
+          "lr": 0.0001,
+          "batch_size": 128,
+          "max_epochs": 50,
+          "patience": 10,
+          "loss": {
+            "norm_kind": "y",
+            "temperature": true,
+            "bias": true,
+            "identical_candidates_threshold": 0.999,
+            "reweigh_positives": true
+          }
+        },
+        "stop_after_epoch": 22
+      },
+      "100": {
+        "training": {
+          "seed": 100,
+          "lr": 0.0001,
+          "batch_size": 128,
+          "max_epochs": 50,
+          "patience": 10,
+          "loss": {
+            "norm_kind": "y",
+            "temperature": true,
+            "bias": true,
+            "identical_candidates_threshold": 0.999,
+            "reweigh_positives": true
+          }
+        },
+        "stop_after_epoch": 21
+      },
+      "200": {
+        "training": {
+          "seed": 200,
+          "lr": 0.0001,
+          "batch_size": 128,
+          "max_epochs": 50,
+          "patience": 10,
+          "loss": {
+            "norm_kind": "y",
+            "temperature": true,
+            "bias": true,
+            "identical_candidates_threshold": 0.999,
+            "reweigh_positives": true
+          }
+        },
+        "stop_after_epoch": 22
+      },
+      "300": {
+        "training": {
+          "seed": 300,
+          "lr": 0.0001,
+          "batch_size": 128,
+          "max_epochs": 50,
+          "patience": 10,
+          "loss": {
+            "norm_kind": "y",
+            "temperature": true,
+            "bias": true,
+            "identical_candidates_threshold": 0.999,
+            "reweigh_positives": true
+          }
+        },
+        "stop_after_epoch": 22
+      },
+      "400": {
+        "training": {
+          "seed": 400,
+          "lr": 0.0001,
+          "batch_size": 128,
+          "max_epochs": 50,
+          "patience": 10,
+          "loss": {
+            "norm_kind": "y",
+            "temperature": true,
+            "bias": true,
+            "identical_candidates_threshold": 0.999,
+            "reweigh_positives": true
+          }
+        },
+        "stop_after_epoch": 23
+      }
+    },
+    "shared_pulses": {
+      "0": {
+        "training": {
+          "seed": 0,
+          "lr": 0.0001,
+          "batch_size": 128,
+          "max_epochs": 50,
+          "patience": 10,
+          "loss": {
+            "norm_kind": "y",
+            "temperature": true,
+            "bias": true,
+            "identical_candidates_threshold": 0.999,
+            "reweigh_positives": true
+          }
+        },
+        "stop_after_epoch": 19
+      },
+      "100": {
+        "training": {
+          "seed": 100,
+          "lr": 0.0001,
+          "batch_size": 128,
+          "max_epochs": 50,
+          "patience": 10,
+          "loss": {
+            "norm_kind": "y",
+            "temperature": true,
+            "bias": true,
+            "identical_candidates_threshold": 0.999,
+            "reweigh_positives": true
+          }
+        },
+        "stop_after_epoch": 25
+      },
+      "200": {
+        "training": {
+          "seed": 200,
+          "lr": 0.0001,
+          "batch_size": 128,
+          "max_epochs": 50,
+          "patience": 10,
+          "loss": {
+            "norm_kind": "y",
+            "temperature": true,
+            "bias": true,
+            "identical_candidates_threshold": 0.999,
+            "reweigh_positives": true
+          }
+        },
+        "stop_after_epoch": 23
+      },
+      "300": {
+        "training": {
+          "seed": 300,
+          "lr": 0.0001,
+          "batch_size": 128,
+          "max_epochs": 50,
+          "patience": 10,
+          "loss": {
+            "norm_kind": "y",
+            "temperature": true,
+            "bias": true,
+            "identical_candidates_threshold": 0.999,
+            "reweigh_positives": true
+          }
+        },
+        "stop_after_epoch": 19
+      },
+      "400": {
+        "training": {
+          "seed": 400,
+          "lr": 0.0001,
+          "batch_size": 128,
+          "max_epochs": 50,
+          "patience": 10,
+          "loss": {
+            "norm_kind": "y",
+            "temperature": true,
+            "bias": true,
+            "identical_candidates_threshold": 0.999,
+            "reweigh_positives": true
+          }
+        },
+        "stop_after_epoch": 19
+      }
+    },
+    "independent_pulses": {
+      "0": {
+        "training": {
+          "seed": 0,
+          "lr": 0.0001,
+          "batch_size": 128,
+          "max_epochs": 50,
+          "patience": 10,
+          "loss": {
+            "norm_kind": "y",
+            "temperature": true,
+            "bias": true,
+            "identical_candidates_threshold": 0.999,
+            "reweigh_positives": true
+          }
+        },
+        "stop_after_epoch": 7
+      },
+      "100": {
+        "training": {
+          "seed": 100,
+          "lr": 0.0001,
+          "batch_size": 128,
+          "max_epochs": 50,
+          "patience": 10,
+          "loss": {
+            "norm_kind": "y",
+            "temperature": true,
+            "bias": true,
+            "identical_candidates_threshold": 0.999,
+            "reweigh_positives": true
+          }
+        },
+        "stop_after_epoch": 8
+      },
+      "200": {
+        "training": {
+          "seed": 200,
+          "lr": 0.0001,
+          "batch_size": 128,
+          "max_epochs": 50,
+          "patience": 10,
+          "loss": {
+            "norm_kind": "y",
+            "temperature": true,
+            "bias": true,
+            "identical_candidates_threshold": 0.999,
+            "reweigh_positives": true
+          }
+        },
+        "stop_after_epoch": 6
+      },
+      "300": {
+        "training": {
+          "seed": 300,
+          "lr": 0.0001,
+          "batch_size": 128,
+          "max_epochs": 50,
+          "patience": 10,
+          "loss": {
+            "norm_kind": "y",
+            "temperature": true,
+            "bias": true,
+            "identical_candidates_threshold": 0.999,
+            "reweigh_positives": true
+          }
+        },
+        "stop_after_epoch": 8
+      },
+      "400": {
+        "training": {
+          "seed": 400,
+          "lr": 0.0001,
+          "batch_size": 128,
+          "max_epochs": 50,
+          "patience": 10,
+          "loss": {
+            "norm_kind": "y",
+            "temperature": true,
+            "bias": true,
+            "identical_candidates_threshold": 0.999,
+            "reweigh_positives": true
+          }
+        },
+        "stop_after_epoch": 5
+      }
+    },
+    "timing": {
+      "0": {
+        "training": {
+          "seed": 0,
+          "lr": 0.0001,
+          "batch_size": 128,
+          "max_epochs": 50,
+          "patience": 3,
+          "loss": {
+            "norm_kind": "y",
+            "temperature": true,
+            "bias": true,
+            "identical_candidates_threshold": 0.999,
+            "reweigh_positives": true
+          }
+        },
+        "stop_after_epoch": 12
+      },
+      "100": {
+        "training": {
+          "seed": 100,
+          "lr": 0.0001,
+          "batch_size": 128,
+          "max_epochs": 50,
+          "patience": 3,
+          "loss": {
+            "norm_kind": "y",
+            "temperature": true,
+            "bias": true,
+            "identical_candidates_threshold": 0.999,
+            "reweigh_positives": true
+          }
+        },
+        "stop_after_epoch": 11
+      },
+      "200": {
+        "training": {
+          "seed": 200,
+          "lr": 0.0001,
+          "batch_size": 128,
+          "max_epochs": 50,
+          "patience": 3,
+          "loss": {
+            "norm_kind": "y",
+            "temperature": true,
+            "bias": true,
+            "identical_candidates_threshold": 0.999,
+            "reweigh_positives": true
+          }
+        },
+        "stop_after_epoch": 10
+      },
+      "300": {
+        "training": {
+          "seed": 300,
+          "lr": 0.0001,
+          "batch_size": 128,
+          "max_epochs": 50,
+          "patience": 3,
+          "loss": {
+            "norm_kind": "y",
+            "temperature": true,
+            "bias": true,
+            "identical_candidates_threshold": 0.999,
+            "reweigh_positives": true
+          }
+        },
+        "stop_after_epoch": 11
+      },
+      "400": {
+        "training": {
+          "seed": 400,
+          "lr": 0.0001,
+          "batch_size": 128,
+          "max_epochs": 50,
+          "patience": 3,
+          "loss": {
+            "norm_kind": "y",
+            "temperature": true,
+            "bias": true,
+            "identical_candidates_threshold": 0.999,
+            "reweigh_positives": true
+          }
+        },
+        "stop_after_epoch": 12
+      }
+    },
+    "stitched": {
+      "0": {
+        "training": {
+          "lr": 0.0001,
+          "batch_size": 128,
+          "max_epochs": 50,
+          "patience": 10,
+          "loss": {
+            "norm_kind": "y",
+            "temperature": true,
+            "bias": true,
+            "identical_candidates_threshold": 0.999,
+            "reweigh_positives": true
+          },
+          "seed": 0
+        },
+        "stop_after_epoch": 17
+      },
+      "100": {
+        "training": {
+          "lr": 0.0001,
+          "batch_size": 128,
+          "max_epochs": 50,
+          "patience": 10,
+          "loss": {
+            "norm_kind": "y",
+            "temperature": true,
+            "bias": true,
+            "identical_candidates_threshold": 0.999,
+            "reweigh_positives": true
+          },
+          "seed": 100
+        },
+        "stop_after_epoch": 13
+      },
+      "200": {
+        "training": {
+          "lr": 0.0001,
+          "batch_size": 128,
+          "max_epochs": 50,
+          "patience": 10,
+          "loss": {
+            "norm_kind": "y",
+            "temperature": true,
+            "bias": true,
+            "identical_candidates_threshold": 0.999,
+            "reweigh_positives": true
+          },
+          "seed": 200
+        },
+        "stop_after_epoch": 18
+      }
+    }
+  },
+  "temperature": 0.04881238136083961,
+  "weights": {
+    "1": 1.5,
+    "2": 1.0,
+    "3": 0.5,
+    "4": 0.5,
+    "5": 0.5
+  },
+  "alpha": 2.0,
+  "beam": 50,
+  "qwen_revision": "49e3418fbbbca6ecbdf9608b4d22e5a407081db4"
+}

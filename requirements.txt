@@ -17,3 +17,6 @@ pytest==8.3.5
 jupyterlab==4.6.4
 nbclient==0.10.4
 matplotlib==3.10.9
+
+# Includes the ClinicalCommunication benchmark loader.
+pnpl @ git+https://github.com/neural-processing-lab/pnpl.git@33aff3fd70a197a47f73a06cb5d1e6b0e1cbfb9b

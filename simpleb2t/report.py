@@ -19,8 +19,9 @@ def mean_sd(values):
 def metadata(work):
     """Counts underlying the session, sentence, and hyperparameter tables."""
     records = bundled("recordings.json.gz")
-    natural = bundled("natural.json.gz")
-    groups = bundled("groups.json.gz")
+    from .data import natural as natural_metadata, groups as occurrence_groups
+    natural = natural_metadata()
+    groups = occurrence_groups()
     splits = {}
     for split, data in natural.items():
         ids = sorted({i["record"] for i in data["items"]})

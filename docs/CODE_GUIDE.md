@@ -4,7 +4,7 @@ Start with the notebooks. Their cells call the same Python functions you can use
 
 ## The main path
 
-1. **`data.py`** downloads LibriBrain100 and extracts three-second word windows.
+1. **`data.py`** adapts PNPL loaders to batches of word windows.
 2. **`models.py`** defines the isolated CNN + MLP and the joint Transformer decoder.
 3. **`training.py`** trains a model and saves the best validation checkpoint.
 4. **`evaluation.py`** predicts word embeddings, combines observations, and evaluates sentences.
@@ -38,7 +38,9 @@ Use a fresh output directory when changing settings so that old cached results a
 
 ## Inputs and outputs
 
-`simpleb2t/assets/` holds the session split, sentence texts, word-occurrence assignments, and frozen T5 word targets. The notebooks show how to inspect these.
+PNPL supplies the recording split, clinical donor assignments, and preprocessed windows.
+`simpleb2t/assets/` holds frozen T5 targets and the metadata used by the optional analyses.
+PNPL caches continuous recordings under `raw_data/.clinical_cache/`; it extracts windows on demand.
 
 Under your chosen `WORK` directory:
 

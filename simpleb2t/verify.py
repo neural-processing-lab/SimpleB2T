@@ -8,8 +8,9 @@ def verify():
     manifest = bundled("checksums.json")
     for filename, expected in manifest.items():
         assert sha(DATA / filename) == expected, filename
-    natural = bundled("natural.json.gz")
-    groups = bundled("groups.json.gz")
+    from .data import natural as natural_metadata, groups as occurrence_groups
+    natural = natural_metadata()
+    groups = occurrence_groups()
     vocab = bundled("vocabularies.json")
     recordings = bundled("recordings.json.gz")
     used = {}

@@ -24,7 +24,7 @@ def main():
     p.add_argument("--data-root", type=Path, required=True)
     p.add_argument("--cross-subject", action="store_true")
     p.add_argument("--annotations-only", action="store_true")
-    p = sub.add_parser("prepare", help="Filter, scale, and extract all fixed word windows")
+    p = sub.add_parser("prepare", help="Prepare PNPL continuous recordings and timing annotations")
     p.add_argument("--data-root", type=Path, required=True)
     p.add_argument("--cross-subject", action="store_true")
     p.add_argument("--annotations-only", action="store_true")

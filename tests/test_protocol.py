@@ -10,7 +10,7 @@ from simpleb2t.lm import nbest
 from simpleb2t.evaluation import word_scores, summarize_rows
 from simpleb2t.data import published_intervals
 from simpleb2t.stitching import StitchBank
-from simpleb2t.normalization import word_window
+from pnpl.datasets.clinical_communication.recordings import word_window
 
 
 def test_wer_uses_edit_alignment_not_position_error():
@@ -94,9 +94,9 @@ def test_stitching_disallows_overlap_and_reused_occurrences():
 
 
 def test_preprocessing_order_and_no_input_mutation():
-    x = np.arange(400, dtype=float).reshape(2, 200) / 10
+    x = np.arange(306 * 200, dtype=float).reshape(306, 200) / 10
     before = x.copy()
-    out = word_window(x, 1)
+    out = word_window(x, 1 / 50)
     expected = torch.tensor(x[:, 1:151], dtype=torch.float32)
     expected = (expected - expected[:, :25].mean(-1, keepdim=True)).clamp(-5, 5)
     torch.testing.assert_close(out, expected)

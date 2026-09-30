@@ -51,10 +51,12 @@ EXTRA = set()     # Enable optional experiments by name, as described in the not
 
 Set `RUN = True` to train and evaluate. Selected `EXTRA` experiments run independently of this flag, using the models named in their section. Set `BASE` to a directory with enough space for data and results.
 
-The full workflow needs a CUDA GPU and roughly **350 GiB of free disk space**. We recommend 64 GiB of RAM and 48 GB of GPU memory for the FP32 Qwen decoder. The previews run on CPU. Synthetic and timing-only controls do not need raw MEG recordings.
+The full workflow needs a CUDA GPU and roughly **200 GiB of free disk space**. We recommend 64 GiB of RAM and 48 GB of GPU memory for the FP32 Qwen decoder. The previews run on CPU. Synthetic and timing-only controls do not need raw MEG recordings.
 
 The split, word targets, and benchmark assignments are included. Recordings and Qwen weights download when needed. Training saves checkpoints and resumes interrupted runs; predictions and scores are saved under `runs/`. Use a new `WORK` directory when changing an experiment.
 
 ## License
 
 [CC BY-NC 4.0](LICENSE). The CNN, Transformer wrapper, and D-SigLIP loss derive from the implementation associated with d’Ascoli et al., *Towards decoding individual words from non-invasive brain recordings*. Dataset and model credits are in [third-party notices](THIRD_PARTY_NOTICES.md).
+
+Data loading uses [PNPL](https://github.com/neural-processing-lab/pnpl): its `ClinicalCommunication` dataset supplies the benchmark and word windows. The optional other-subject analysis uses PNPL’s regular LibriBrain100 file access with the same preprocessing. Recordings are cached once; overlapping windows are extracted when needed.

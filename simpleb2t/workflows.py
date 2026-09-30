@@ -17,7 +17,7 @@ def storage_estimate():
     downloads = bundled("downloads.json")
     return pd.Series({
         "Raw recordings (GiB)": sum(downloads[r["neural"]]["size"] for r in records) / 2**30,
-        "Float32 window cache (GiB)": sum(len(r["words"]) for r in records) * 306 * 150 * 4 / 2**30,
+        "PNPL continuous cache (GiB)": sum(round((r["last_sample_time"] - r["origin"]) * 50) + 1 for r in records) * 306 * 8 / 2**30,
     }).round(1)
 
 

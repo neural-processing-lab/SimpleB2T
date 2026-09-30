@@ -1,4 +1,4 @@
-"""Read public HDF5 recordings; preprocess locally; use immutable occurrence IDs."""
+"""PNPL data loading, adapted to the model's flat word indices."""
 
 import collections
 import math
@@ -10,12 +10,24 @@ from .io import DATA, bundled, read, write, sha
 
 @lru_cache(None)
 def natural():
-    return bundled("natural.json.gz")
+    from pnpl.datasets.clinical_communication.manifest import load
+
+    # Old analysis files use a larger recording list (including other subjects).
+    # Match by filename, never by PNPL's internal recording number.
+    lookup = {r["neural"]: i for i, r in enumerate(records())}
+    record_ids = [lookup[r["neural"]] for r in load("recordings.json")]
+    return {
+        split: dict(items=[dict(item, record=record_ids[item["record"]])
+                           for item in load(f"natural_{split}.json.gz")["items"]],
+                    sequences=load(f"natural_{split}.json.gz")["sequences"])
+        for split in ("train", "val", "test")
+    }
 
 
 @lru_cache(None)
 def groups():
-    return bundled("groups.json.gz")
+    from pnpl.datasets.clinical_communication.manifest import load
+    return load("groups.json.gz")
 
 
 @lru_cache(None)
@@ -39,123 +51,106 @@ def published_intervals(frame):
     return result
 
 
-def download(root, cross_subject=False, annotations_only=False):
-    """Download only the public files used in the paper, at the pinned release."""
-    from huggingface_hub import hf_hub_download
+def _store(root, cache_path=None, download=True):
+    """PNPL's continuous cache, also accepting the other-subject recordings."""
+    from pnpl.datasets import LibriBrain100
+    from pnpl.datasets.clinical_communication.recordings import RecordingStore
+    from pnpl.datasets.clinical_communication.manifest import load
 
+    class Store(RecordingStore):
+        # ClinicalCommunication has pinned metadata for subject 0. The optional
+        # cross-subject experiment uses regular LibriBrain100 file access.
+        def _source(self, relative, checksum):
+            if relative in load("downloads.json"):
+                return super()._source(relative, checksum)
+            path = self.root / relative
+            if self.download:
+                LibriBrain100.ensure_file_download(str(path), str(self.root),
+                    repo_id=bundled("downloads.json")[relative]["repo"])
+            if not path.exists():
+                raise FileNotFoundError(path)
+            if checksum is not None and sha(path) != checksum:
+                raise ValueError(f"Source checksum mismatch: {path}")
+            return path
+
+        def _identity(self, record):
+            if record["neural"] in load("downloads.json"):
+                return super()._identity(record)
+            import mne
+            import sklearn
+            import torch
+            from pnpl.datasets.clinical_communication.recordings import PIPELINE
+            return dict(pipeline=PIPELINE, neural=record["neural"],
+                        source_sha256=bundled("downloads.json")[record["neural"]]["sha256"],
+                        events_sha256=record["events_sha256"], origin=record["origin"],
+                        mne=mne.__version__, sklearn=sklearn.__version__,
+                        numpy=np.__version__, torch=torch.__version__)
+
+    return Store(root, cache_path=cache_path, download=download)
+
+
+def clinical_dataset(root, partition="test", cache_path=None):
+    """All five donors; observation averaging is done later by the model."""
+    from pnpl.datasets import ClinicalCommunication
+    return ClinicalCommunication(root, partition=partition, k=5,
+                                 test_sentences=200, cache_path=cache_path)
+
+
+def download(root, cross_subject=False, annotations_only=False):
+    """Ask PNPL for source files. Timing controls download only event tables."""
+    store = _store(root)
     for r in records():
         if r["subject"] != "0" and not cross_subject:
             continue
         for name in (("events",) if annotations_only else ("neural", "events")):
-            entry = bundled("downloads.json")[r[name]]
-            path = hf_hub_download(
-                repo_id=entry["repo"],
-                repo_type="dataset",
-                revision=entry["revision"],
-                filename=r[name],
-                local_dir=root,
-            )
-            if entry["sha256"] is not None and sha(path) != entry["sha256"]:
-                raise ValueError(f"Download checksum mismatch: {r[name]}")
+            checksum = r["events_sha256"] if name == "events" else bundled("downloads.json")[r[name]]["sha256"]
+            store._source(r[name], checksum)
 
 
 def prepare(root, work, cross_subject=False, annotations_only=False):
-    """One recording at a time, atomic cached arrays; rerunning skips completed work."""
+    """Prepare PNPL's continuous cache and the timing-only annotation index."""
     import pandas as pd
 
-    work = Path(work)
-    root = Path(root)
-    for rid, r in enumerate(records()):
-        if r["subject"] != "0" and not cross_subject:
-            continue
-        folder = work / "recordings" / str(rid)
-        table = root / r["events"]
-        if sha(table) != r["events_sha256"]:
-            raise ValueError(f"Annotation checksum mismatch: {table}")
-        frame = pd.read_csv(table, sep="\t")
-        if not (folder / "annotations.json").exists():
-            intervals = published_intervals(frame)
+    work, root = Path(work), Path(root).expanduser().resolve()
+    cache = root / ".clinical_cache"
+    write(work / "data.json", dict(root=str(root), cache=str(cache)))
+    store = _store(root, cache)
+    try:
+        for rid, r in enumerate(records()):
+            if r["subject"] != "0" and not cross_subject:
+                continue
+            table = store._source(r["events"], r["events_sha256"])
+            frame = pd.read_csv(table, sep="\t")
             sentence_ids = {
                 int(i): [str(row.wavile), str(row.sentenceidx)]
                 for i, row in frame.loc[frame.kind == "word"].iterrows()
             }
-            write(folder / "annotations.json", dict(intervals=intervals, sentence_ids=sentence_ids))
-        if annotations_only or (folder / "receipt.json").exists():
-            continue
-        import h5py
-        import mne
-        from .normalization import recording_scale, word_window
-
-        def attrs(v):
-            if isinstance(v, bytes):
-                v = v.decode()
-            if isinstance(v, str):
-                return [item.strip() for item in v.split(",")]
-            return [x.decode() if isinstance(x, bytes) else str(x) for x in v]
-
-        path = root / r["neural"]
-        print(f"Preprocessing {rid + 1}/{len(records())}: {path.name}", flush=True)
-        with h5py.File(path, "r") as f:
-            names = attrs(f.attrs["channel_names"])
-            kinds = attrs(f.attrs["channel_types"])
-            rate = float(f.attrs["sample_frequency"])
-            times = np.asarray(f["times"])
-            assert len(names) == 306 and float(times[0]) == r["origin"]
-            expected = float(times[0]) + np.arange(len(times)) / rate
-            tolerance = max(
-                1e-6, float(np.finfo(times.dtype).eps) * max(1.0, float(abs(times).max()))
-            )
-            assert np.allclose(times, expected, atol=tolerance, rtol=0)
-            raw = mne.io.RawArray(
-                np.asarray(f["data"], dtype=np.float64),
-                mne.create_info(names, rate, kinds),
-                verbose="ERROR",
-            )
-        raw.pick(mne.pick_types(raw.info, meg=True, ref_meg=False, exclude=[]))
-        layout = mne.channels.read_layout("Vectorview-all")
-        lookup = {n.replace(" ", ""): i for i, n in enumerate(layout.names)}
-        xy = layout.pos[[lookup[n] for n in raw.ch_names], :2]
-        positions = ((xy - xy.min(0)) / np.ptp(xy, axis=0)).astype("float32")
-        np.testing.assert_array_equal(positions, np.load(DATA / "positions.npy"))
-        raw.load_data().filter(0.1, 40.0, n_jobs=1, verbose="ERROR").resample(
-            50.0, n_jobs=1, verbose="ERROR"
-        )
-        scaled, _ = recording_scale(raw.get_data())
-        raw.close()
-        del raw
-        events = sorted(r["words"], key=lambda e: (e["start"], e["event_index"]))
-        temporary = folder / "windows.tmp.npy"
-        a = np.lib.format.open_memmap(
-            temporary, mode="w+", dtype="float32", shape=(len(events), 306, 150)
-        )
-        for j, e in enumerate(events):
-            a[j] = word_window(scaled, round((e["start"] - r["origin"]) * 50)).numpy()
-        a.flush()
-        del a, scaled
-        temporary.replace(folder / "windows.npy")
-        write(
-            folder / "receipt.json",
-            dict(
-                events=[e["event_index"] for e in events],
-                annotation_sha256=r["events_sha256"],
-                source_bytes=path.stat().st_size,
-                channels=names,
-                shape=[len(events), 306, 150],
-                preprocessing="filter .1-40 Hz; resample 50 Hz; recording RobustScaler; float32; baseline 25 samples; clip [-5,5]",
-            ),
-        )
+            write(work / "recordings" / str(rid) / "annotations.json",
+                  dict(intervals=published_intervals(frame), sentence_ids=sentence_ids))
+            if not annotations_only:
+                print(f"Preparing {r['neural']} with PNPL", flush=True)
+                store.array(r)
+    finally:
+        store.close()
 
 
 class Windows:
-    """Memory-mapped recording shards; indices always refer to fixed natural metadata."""
+    """Batches of PNPL windows; indices refer to the fixed natural word list."""
 
     def __init__(self, work, split, mode="ours", metadata=None):
         self.work = Path(work)
         self.mode = mode
         d = natural()[split] if metadata is None else metadata
         self.items, self.sequences = d["items"], d["sequences"]
-        self.arrays = {}
-        self.rows = {}
+        self.dataset = None
+        self.store = None
+        if mode not in ("timing", "shared_pulses", "independent_pulses"):
+            config = read(self.work / "data.json")
+            if metadata is None and split in ("train", "val"):
+                self.dataset = clinical_dataset(config["root"], split, config["cache"])
+                self.store = self.dataset.store
+            else:
+                self.store = _store(config["root"], config["cache"])
         self.annotations = {}
         if mode == "timing":
             for rid in {i["record"] for i in self.items}:
@@ -176,17 +171,51 @@ class Windows:
             return np.asarray(
                 [self.annotations[i["record"]][str(i["event"])] for i in items], dtype="float32"
             )
+        if self.dataset is not None:
+            return np.stack([self.dataset[int(i)]["meg"].numpy() for i in indices])
+        return np.stack([self.store.window(records()[i["record"]], i["onset"]).numpy()
+                         for i in items])
+
+    def close(self):
+        if self.store is not None:
+            self.store.close()
+
+
+class ClinicalWindows:
+    """Adapt PNPL clinical sentences to the decoder's donor-index batches.
+
+    Keep only the last sentence in memory. PNPL owns window extraction and the
+    five-occurrence assignment; the decoder owns embedding aggregation.
+    """
+
+    def __init__(self, work, split):
+        config = read(Path(work) / "data.json")
+        self.dataset = clinical_dataset(config["root"], split, config["cache"])
+        self.items = natural()["val" if split == "dev" else "test"]["items"]
+        self.locations = {}
+        self.cached = None
+        self.cached_id = None
+        sentences = collections.defaultdict(list)
+        for group in groups()[split]:
+            sentences[group["sentence_id"]].append(group)
+        for sentence, rows in enumerate(sentences.values()):
+            for position, row in enumerate(rows):
+                for member, index in enumerate(row["indices"]):
+                    self.locations[index] = (sentence, position, member)
+
+    def __getitem__(self, indices):
         out = []
-        for item in items:
-            rid = item["record"]
-            if rid not in self.arrays:
-                folder = self.work / "recordings" / str(rid)
-                self.arrays[rid] = np.load(folder / "windows.npy", mmap_mode="r")
-                self.rows[rid] = {
-                    e: j for j, e in enumerate(read(folder / "receipt.json")["events"])
-                }
-            out.append(self.arrays[rid][self.rows[rid][item["event"]]])
+        for index in indices:
+            sentence, position, member = self.locations[int(index)]
+            if sentence != self.cached_id:
+                self.cached = self.dataset[sentence]["meg"].numpy()
+                self.cached_id = sentence
+            out.append(self.cached[position, member])
         return np.stack(out)
+
+    def close(self):
+        self.dataset.close()
+        self.cached = None
 
 
 def cross_subject_metadata(work, subject):

@@ -7,7 +7,7 @@ import numpy as np
 import torch
 from torch.nn import functional as F
 from .io import DATA, bundled, read, write, checkpoint, sha
-from .data import Windows, groups, cross_subject_metadata
+from .data import Windows, ClinicalWindows, groups, cross_subject_metadata
 from .training import load_model, forward, predict, validation_vectors
 from .metrics import metrics
 
@@ -46,7 +46,11 @@ def export(work, kind, seed, split="test", device="cuda", noise=False):
         )
     else:
         g = groups()[split]
-        a = Windows(work, "val" if split == "dev" else "test", kind)
+        repaired_dev = split == "dev" and kind in ("joint", "stitched")
+        if kind in ("ours", "joint", "stitched", "single_word") and not repaired_dev:
+            a = ClinicalWindows(work, split)
+        else:
+            a = Windows(work, "val" if split == "dev" else "test", kind)
         indices = [p["indices"] for p in g]
         if split == "dev" and kind in ("joint", "stitched"):
             indices = bundled("stitched_dev.json")["donors"]

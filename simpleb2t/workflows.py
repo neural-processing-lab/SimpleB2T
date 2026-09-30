@@ -64,15 +64,14 @@ def overlap_example():
 
 
 def clinical(work, seeds=(0,), device="cuda", observations=(1, 5)):
-    """Compute the three main conditions; all 200 sentences, published settings."""
+    """Compute the three main conditions using the editable decoding defaults."""
     from .evaluation import decode
-    settings = bundled("experiment.json")
     results = [decode(work, "ours", seeds[0], control="lm", device=device, tag="lm")]
     for k in observations:
         for seed in seeds:
             results.append(decode(work, "ours", seed, k=k, weight=0, alpha=0,
                                   device=device, tag=f"brain_ours_{seed}_k{k}"))
-            results.append(decode(work, "ours", seed, k=k, weight=settings["weights"][str(k)],
+            results.append(decode(work, "ours", seed, k=k,
                                   device=device, tag=f"clinical_ours_{seed}_k{k}"))
     return results
 

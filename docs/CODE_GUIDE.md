@@ -51,3 +51,17 @@ Under your chosen `WORK` directory:
 `metrics.py` defines word error rate, sentence match, and balanced word accuracy. `analysis.py` contains the optional error analyses. `workflows.py` supplies the notebook helpers.
 
 To check a code change, run `python -m pytest -q`. The tests cover the scoring rules, beam search, independent word processing, and training resumption.
+
+## Configuration
+
+`simpleb2t/assets/experiment.json` contains one training configuration per model under
+`models`. Pass the seed to `train`; it does not need its own configuration.
+
+Decoding defaults live in the same file: `temperature`, `weights` (LM weight by observation
+count), `alpha`, `beam`, `baseline_decoding`, and `prompt_weights`. They are starting values
+from our experiments, not automatically fitted to a new checkpoint. Arguments passed to
+`decode` override them. Use a fresh output directory when changing them.
+
+For optional tuning, run `python -m simpleb2t run clinical --tune` or
+`python -m simpleb2t run prompts --tune`. Neural temperature uses validation data; LM
+weight uses development sentences. Test data is not used for tuning.

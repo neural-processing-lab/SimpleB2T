@@ -63,9 +63,9 @@ def main():
         ],
     )
     p.add_argument(
-        "--published-settings",
+        "--tune",
         action="store_true",
-        help="Reuse published baseline/prompt settings instead of refitting them on development data",
+        help="Fit decoding settings on validation/development data instead of using configured defaults",
     )
     sub.add_parser("summarize", help="Collect locally computed numeric results")
     sub.add_parser(
@@ -91,7 +91,7 @@ def main():
         from .experiments import run, aggregate
 
         if args.command == "run":
-            run(args.work, args.recipe, args.device, args.published_settings, args.seeds)
+            run(args.work, args.recipe, args.device, tune=args.tune, seeds=args.seeds)
         else:
             aggregate(args.work)
     elif args.command == "targets":

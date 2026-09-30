@@ -180,28 +180,16 @@ def test_full_training_resume_restores_optimizer_and_rng(tmp_path, monkeypatch):
     from simpleb2t.io import read
     import copy
 
-    config = {
-        "cnn": {},
-        "transformer": {},
-        "runs": {
-            "ours": {
-                "0": {
-                    "training": {
-                        "loss": {
-                            "norm_kind": "y",
-                            "temperature": True,
-                            "bias": True,
-                            "identical_candidates_threshold": 0.999,
-                            "reweigh_positives": True,
-                        },
-                        "lr": 0.001,
-                        "max_epochs": 3,
-                        "patience": 10,
-                    },
-                }
-            }
-        },
-    }
+    config = {'cnn': {},
+     'transformer': {},
+     'models': {'ours': {'loss': {'norm_kind': 'y',
+                                  'temperature': True,
+                                  'bias': True,
+                                  'identical_candidates_threshold': 0.999,
+                                  'reweigh_positives': True},
+                         'lr': 0.001,
+                         'max_epochs': 3,
+                         'patience': 10}}}
     data = tmp_path / "data"
     data.mkdir()
     generator = np.random.default_rng(3)

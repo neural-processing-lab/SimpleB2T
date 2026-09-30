@@ -6,10 +6,8 @@
   "stitched_val.json.gz": "91e950abfb08135f90560301c0161ba40e9b070ff01a038d5355fc414f846b97",
   "downloads.json": "b3fe11ffa6493ab16d6af2a2cbaa436abb1491b8b7e54433e0701775b0162826",
   "pos_tags.json": "96775d8f5c11c9619e76df51a76ce08c2feac3115fad4ef2a3f89d2e241d8612",
-  "prompt_settings.json": "7e7c728bd4ff8866cfc497c356553039e11d17f8c9d4801de011002e5e7ca448",
   "vocabularies.json": "ee866ce936c5dfa6e8fca86027aa57b7ce8df9179afb733a9b9c19304d6c65d8",
-  "baseline_settings.json": "28abc8a7efc009fc82d8c901b3e8b91bd15011443bf3547023f6294e6fb67160",
-  "experiment.json": "acc18236c82f621470b29af1d490749120bf231c42855e9be7751c9e9b541bb2",
+  "experiment.json": "3838f342bb16aeef5d2a104cf7b683dfc4283d7ea7cf258f0beffff49ce67303",
   "stitched_dev.json": "988c103426334ab131150eca838b6c27913bd769dedf280f4e3654ed35a42588",
   "stitched_train.json.gz": "dbeef3af5b0bfd22cf81ddd9c673ee26a687ab4de6f4056e77b83349ec3c3a59",
   "positions.npy": "1b794599b2aacb84d851c3248f29e0fd497a5f95bf21b72368a54ff2fccff5cd"

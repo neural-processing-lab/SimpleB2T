@@ -25,570 +25,6 @@
     "depth": 16,
     "heads": 16
   },
-  "runs": {
-    "ours": {
-      "0": {
-        "training": {
-          "seed": 0,
-          "mlp_depth": 4,
-          "mlp_hidden": 2048,
-          "batch_size": 128,
-          "lr": 0.0001,
-          "max_epochs": 30,
-          "patience": 10,
-          "evaluation_vocabulary": "sentence_92",
-          "evaluation_aggregation": "mean_of_5_predictions",
-          "loss": {
-            "norm_kind": "y",
-            "temperature": true,
-            "bias": true,
-            "identical_candidates_threshold": 0.999,
-            "reweigh_positives": true
-          }
-        }
-      },
-      "100": {
-        "training": {
-          "seed": 100,
-          "mlp_depth": 4,
-          "mlp_hidden": 2048,
-          "batch_size": 128,
-          "lr": 0.0001,
-          "max_epochs": 30,
-          "patience": 10,
-          "evaluation_vocabulary": "sentence_92",
-          "evaluation_aggregation": "mean_of_5_predictions",
-          "loss": {
-            "norm_kind": "y",
-            "temperature": true,
-            "bias": true,
-            "identical_candidates_threshold": 0.999,
-            "reweigh_positives": true
-          }
-        }
-      },
-      "200": {
-        "training": {
-          "seed": 200,
-          "mlp_depth": 4,
-          "mlp_hidden": 2048,
-          "batch_size": 128,
-          "lr": 0.0001,
-          "max_epochs": 30,
-          "patience": 10,
-          "evaluation_vocabulary": "sentence_92",
-          "evaluation_aggregation": "mean_of_5_predictions",
-          "loss": {
-            "norm_kind": "y",
-            "temperature": true,
-            "bias": true,
-            "identical_candidates_threshold": 0.999,
-            "reweigh_positives": true
-          }
-        }
-      },
-      "300": {
-        "training": {
-          "seed": 300,
-          "mlp_depth": 4,
-          "mlp_hidden": 2048,
-          "batch_size": 128,
-          "lr": 0.0001,
-          "max_epochs": 30,
-          "patience": 10,
-          "evaluation_vocabulary": "sentence_92",
-          "evaluation_aggregation": "mean_of_5_predictions",
-          "loss": {
-            "norm_kind": "y",
-            "temperature": true,
-            "bias": true,
-            "identical_candidates_threshold": 0.999,
-            "reweigh_positives": true
-          }
-        }
-      },
-      "400": {
-        "training": {
-          "seed": 400,
-          "mlp_depth": 4,
-          "mlp_hidden": 2048,
-          "batch_size": 128,
-          "lr": 0.0001,
-          "max_epochs": 30,
-          "patience": 10,
-          "evaluation_vocabulary": "sentence_92",
-          "evaluation_aggregation": "mean_of_5_predictions",
-          "loss": {
-            "norm_kind": "y",
-            "temperature": true,
-            "bias": true,
-            "identical_candidates_threshold": 0.999,
-            "reweigh_positives": true
-          }
-        }
-      }
-    },
-    "joint": {
-      "0": {
-        "training": {
-          "seed": 0,
-          "lr": 0.0001,
-          "batch_size": 128,
-          "max_epochs": 30,
-          "patience": 10,
-          "loss": {
-            "norm_kind": "y",
-            "temperature": true,
-            "bias": true,
-            "identical_candidates_threshold": 0.999,
-            "reweigh_positives": true
-          }
-        }
-      },
-      "100": {
-        "training": {
-          "seed": 100,
-          "lr": 0.0001,
-          "batch_size": 128,
-          "max_epochs": 30,
-          "patience": 10,
-          "loss": {
-            "norm_kind": "y",
-            "temperature": true,
-            "bias": true,
-            "identical_candidates_threshold": 0.999,
-            "reweigh_positives": true
-          }
-        }
-      },
-      "200": {
-        "training": {
-          "seed": 200,
-          "lr": 0.0001,
-          "batch_size": 128,
-          "max_epochs": 30,
-          "patience": 10,
-          "loss": {
-            "norm_kind": "y",
-            "temperature": true,
-            "bias": true,
-            "identical_candidates_threshold": 0.999,
-            "reweigh_positives": true
-          }
-        }
-      },
-      "300": {
-        "training": {
-          "seed": 300,
-          "lr": 0.0001,
-          "batch_size": 128,
-          "max_epochs": 30,
-          "patience": 10,
-          "loss": {
-            "norm_kind": "y",
-            "temperature": true,
-            "bias": true,
-            "identical_candidates_threshold": 0.999,
-            "reweigh_positives": true
-          }
-        }
-      },
-      "400": {
-        "training": {
-          "seed": 400,
-          "lr": 0.0001,
-          "batch_size": 128,
-          "max_epochs": 30,
-          "patience": 10,
-          "loss": {
-            "norm_kind": "y",
-            "temperature": true,
-            "bias": true,
-            "identical_candidates_threshold": 0.999,
-            "reweigh_positives": true
-          }
-        }
-      }
-    },
-    "single_word": {
-      "0": {
-        "training": {
-          "seed": 0,
-          "lr": 0.0001,
-          "batch_size": 128,
-          "max_epochs": 30,
-          "patience": 10,
-          "loss": {
-            "norm_kind": "y",
-            "temperature": true,
-            "bias": true,
-            "identical_candidates_threshold": 0.999,
-            "reweigh_positives": true
-          }
-        }
-      },
-      "100": {
-        "training": {
-          "seed": 100,
-          "lr": 0.0001,
-          "batch_size": 128,
-          "max_epochs": 30,
-          "patience": 10,
-          "loss": {
-            "norm_kind": "y",
-            "temperature": true,
-            "bias": true,
-            "identical_candidates_threshold": 0.999,
-            "reweigh_positives": true
-          }
-        }
-      },
-      "200": {
-        "training": {
-          "seed": 200,
-          "lr": 0.0001,
-          "batch_size": 128,
-          "max_epochs": 30,
-          "patience": 10,
-          "loss": {
-            "norm_kind": "y",
-            "temperature": true,
-            "bias": true,
-            "identical_candidates_threshold": 0.999,
-            "reweigh_positives": true
-          }
-        }
-      },
-      "300": {
-        "training": {
-          "seed": 300,
-          "lr": 0.0001,
-          "batch_size": 128,
-          "max_epochs": 30,
-          "patience": 10,
-          "loss": {
-            "norm_kind": "y",
-            "temperature": true,
-            "bias": true,
-            "identical_candidates_threshold": 0.999,
-            "reweigh_positives": true
-          }
-        }
-      },
-      "400": {
-        "training": {
-          "seed": 400,
-          "lr": 0.0001,
-          "batch_size": 128,
-          "max_epochs": 30,
-          "patience": 10,
-          "loss": {
-            "norm_kind": "y",
-            "temperature": true,
-            "bias": true,
-            "identical_candidates_threshold": 0.999,
-            "reweigh_positives": true
-          }
-        }
-      }
-    },
-    "shared_pulses": {
-      "0": {
-        "training": {
-          "seed": 0,
-          "lr": 0.0001,
-          "batch_size": 128,
-          "max_epochs": 30,
-          "patience": 10,
-          "loss": {
-            "norm_kind": "y",
-            "temperature": true,
-            "bias": true,
-            "identical_candidates_threshold": 0.999,
-            "reweigh_positives": true
-          }
-        }
-      },
-      "100": {
-        "training": {
-          "seed": 100,
-          "lr": 0.0001,
-          "batch_size": 128,
-          "max_epochs": 30,
-          "patience": 10,
-          "loss": {
-            "norm_kind": "y",
-            "temperature": true,
-            "bias": true,
-            "identical_candidates_threshold": 0.999,
-            "reweigh_positives": true
-          }
-        }
-      },
-      "200": {
-        "training": {
-          "seed": 200,
-          "lr": 0.0001,
-          "batch_size": 128,
-          "max_epochs": 30,
-          "patience": 10,
-          "loss": {
-            "norm_kind": "y",
-            "temperature": true,
-            "bias": true,
-            "identical_candidates_threshold": 0.999,
-            "reweigh_positives": true
-          }
-        }
-      },
-      "300": {
-        "training": {
-          "seed": 300,
-          "lr": 0.0001,
-          "batch_size": 128,
-          "max_epochs": 30,
-          "patience": 10,
-          "loss": {
-            "norm_kind": "y",
-            "temperature": true,
-            "bias": true,
-            "identical_candidates_threshold": 0.999,
-            "reweigh_positives": true
-          }
-        }
-      },
-      "400": {
-        "training": {
-          "seed": 400,
-          "lr": 0.0001,
-          "batch_size": 128,
-          "max_epochs": 30,
-          "patience": 10,
-          "loss": {
-            "norm_kind": "y",
-            "temperature": true,
-            "bias": true,
-            "identical_candidates_threshold": 0.999,
-            "reweigh_positives": true
-          }
-        }
-      }
-    },
-    "independent_pulses": {
-      "0": {
-        "training": {
-          "seed": 0,
-          "lr": 0.0001,
-          "batch_size": 128,
-          "max_epochs": 30,
-          "patience": 10,
-          "loss": {
-            "norm_kind": "y",
-            "temperature": true,
-            "bias": true,
-            "identical_candidates_threshold": 0.999,
-            "reweigh_positives": true
-          }
-        }
-      },
-      "100": {
-        "training": {
-          "seed": 100,
-          "lr": 0.0001,
-          "batch_size": 128,
-          "max_epochs": 30,
-          "patience": 10,
-          "loss": {
-            "norm_kind": "y",
-            "temperature": true,
-            "bias": true,
-            "identical_candidates_threshold": 0.999,
-            "reweigh_positives": true
-          }
-        }
-      },
-      "200": {
-        "training": {
-          "seed": 200,
-          "lr": 0.0001,
-          "batch_size": 128,
-          "max_epochs": 30,
-          "patience": 10,
-          "loss": {
-            "norm_kind": "y",
-            "temperature": true,
-            "bias": true,
-            "identical_candidates_threshold": 0.999,
-            "reweigh_positives": true
-          }
-        }
-      },
-      "300": {
-        "training": {
-          "seed": 300,
-          "lr": 0.0001,
-          "batch_size": 128,
-          "max_epochs": 30,
-          "patience": 10,
-          "loss": {
-            "norm_kind": "y",
-            "temperature": true,
-            "bias": true,
-            "identical_candidates_threshold": 0.999,
-            "reweigh_positives": true
-          }
-        }
-      },
-      "400": {
-        "training": {
-          "seed": 400,
-          "lr": 0.0001,
-          "batch_size": 128,
-          "max_epochs": 30,
-          "patience": 10,
-          "loss": {
-            "norm_kind": "y",
-            "temperature": true,
-            "bias": true,
-            "identical_candidates_threshold": 0.999,
-            "reweigh_positives": true
-          }
-        }
-      }
-    },
-    "timing": {
-      "0": {
-        "training": {
-          "seed": 0,
-          "lr": 0.0001,
-          "batch_size": 128,
-          "max_epochs": 30,
-          "patience": 10,
-          "loss": {
-            "norm_kind": "y",
-            "temperature": true,
-            "bias": true,
-            "identical_candidates_threshold": 0.999,
-            "reweigh_positives": true
-          }
-        }
-      },
-      "100": {
-        "training": {
-          "seed": 100,
-          "lr": 0.0001,
-          "batch_size": 128,
-          "max_epochs": 30,
-          "patience": 10,
-          "loss": {
-            "norm_kind": "y",
-            "temperature": true,
-            "bias": true,
-            "identical_candidates_threshold": 0.999,
-            "reweigh_positives": true
-          }
-        }
-      },
-      "200": {
-        "training": {
-          "seed": 200,
-          "lr": 0.0001,
-          "batch_size": 128,
-          "max_epochs": 30,
-          "patience": 10,
-          "loss": {
-            "norm_kind": "y",
-            "temperature": true,
-            "bias": true,
-            "identical_candidates_threshold": 0.999,
-            "reweigh_positives": true
-          }
-        }
-      },
-      "300": {
-        "training": {
-          "seed": 300,
-          "lr": 0.0001,
-          "batch_size": 128,
-          "max_epochs": 30,
-          "patience": 10,
-          "loss": {
-            "norm_kind": "y",
-            "temperature": true,
-            "bias": true,
-            "identical_candidates_threshold": 0.999,
-            "reweigh_positives": true
-          }
-        }
-      },
-      "400": {
-        "training": {
-          "seed": 400,
-          "lr": 0.0001,
-          "batch_size": 128,
-          "max_epochs": 30,
-          "patience": 10,
-          "loss": {
-            "norm_kind": "y",
-            "temperature": true,
-            "bias": true,
-            "identical_candidates_threshold": 0.999,
-            "reweigh_positives": true
-          }
-        }
-      }
-    },
-    "stitched": {
-      "0": {
-        "training": {
-          "lr": 0.0001,
-          "batch_size": 128,
-          "max_epochs": 30,
-          "patience": 10,
-          "loss": {
-            "norm_kind": "y",
-            "temperature": true,
-            "bias": true,
-            "identical_candidates_threshold": 0.999,
-            "reweigh_positives": true
-          },
-          "seed": 0
-        }
-      },
-      "100": {
-        "training": {
-          "lr": 0.0001,
-          "batch_size": 128,
-          "max_epochs": 30,
-          "patience": 10,
-          "loss": {
-            "norm_kind": "y",
-            "temperature": true,
-            "bias": true,
-            "identical_candidates_threshold": 0.999,
-            "reweigh_positives": true
-          },
-          "seed": 100
-        }
-      },
-      "200": {
-        "training": {
-          "lr": 0.0001,
-          "batch_size": 128,
-          "max_epochs": 30,
-          "patience": 10,
-          "loss": {
-            "norm_kind": "y",
-            "temperature": true,
-            "bias": true,
-            "identical_candidates_threshold": 0.999,
-            "reweigh_positives": true
-          },
-          "seed": 200
-        }
-      }
-    }
-  },
   "temperature": 0.04881238136083961,
   "weights": {
     "1": 1.5,
@@ -599,5 +35,131 @@
   },
   "alpha": 2.0,
   "beam": 50,
-  "qwen_revision": "49e3418fbbbca6ecbdf9608b4d22e5a407081db4"
+  "qwen_revision": "49e3418fbbbca6ecbdf9608b4d22e5a407081db4",
+  "models": {
+    "ours": {
+      "mlp_depth": 4,
+      "mlp_hidden": 2048,
+      "batch_size": 128,
+      "lr": 0.0001,
+      "max_epochs": 30,
+      "patience": 10,
+      "evaluation_vocabulary": "sentence_92",
+      "evaluation_aggregation": "mean_of_5_predictions",
+      "loss": {
+        "norm_kind": "y",
+        "temperature": true,
+        "bias": true,
+        "identical_candidates_threshold": 0.999,
+        "reweigh_positives": true
+      }
+    },
+    "joint": {
+      "lr": 0.0001,
+      "batch_size": 128,
+      "max_epochs": 30,
+      "patience": 10,
+      "loss": {
+        "norm_kind": "y",
+        "temperature": true,
+        "bias": true,
+        "identical_candidates_threshold": 0.999,
+        "reweigh_positives": true
+      }
+    },
+    "single_word": {
+      "lr": 0.0001,
+      "batch_size": 128,
+      "max_epochs": 30,
+      "patience": 10,
+      "loss": {
+        "norm_kind": "y",
+        "temperature": true,
+        "bias": true,
+        "identical_candidates_threshold": 0.999,
+        "reweigh_positives": true
+      }
+    },
+    "shared_pulses": {
+      "lr": 0.0001,
+      "batch_size": 128,
+      "max_epochs": 30,
+      "patience": 10,
+      "loss": {
+        "norm_kind": "y",
+        "temperature": true,
+        "bias": true,
+        "identical_candidates_threshold": 0.999,
+        "reweigh_positives": true
+      }
+    },
+    "independent_pulses": {
+      "lr": 0.0001,
+      "batch_size": 128,
+      "max_epochs": 30,
+      "patience": 10,
+      "loss": {
+        "norm_kind": "y",
+        "temperature": true,
+        "bias": true,
+        "identical_candidates_threshold": 0.999,
+        "reweigh_positives": true
+      }
+    },
+    "timing": {
+      "lr": 0.0001,
+      "batch_size": 128,
+      "max_epochs": 30,
+      "patience": 10,
+      "loss": {
+        "norm_kind": "y",
+        "temperature": true,
+        "bias": true,
+        "identical_candidates_threshold": 0.999,
+        "reweigh_positives": true
+      }
+    },
+    "stitched": {
+      "lr": 0.0001,
+      "batch_size": 128,
+      "max_epochs": 30,
+      "patience": 10,
+      "loss": {
+        "norm_kind": "y",
+        "temperature": true,
+        "bias": true,
+        "identical_candidates_threshold": 0.999,
+        "reweigh_positives": true
+      }
+    }
+  },
+  "baseline_decoding": {
+    "joint": {
+      "1": {
+        "temperature": 0.022908676527677724,
+        "weight": 4.0
+      },
+      "5": {
+        "temperature": 0.008317637711026709,
+        "weight": 8.0
+      }
+    },
+    "stitched": {
+      "1": {
+        "temperature": 0.05754399373371572,
+        "weight": 2.0
+      },
+      "5": {
+        "temperature": 0.05754399373371572,
+        "weight": 2.0
+      }
+    }
+  },
+  "prompt_weights": {
+    "A": 0.25,
+    "B": 0.5,
+    "C": 0.25,
+    "D": 0.25,
+    "F": 0.5
+  }
 }

@@ -208,15 +208,28 @@ def summarize_rows(rows):
     return m
 
 
+def decoding_defaults(kind="ours", k=5, prompt="E"):
+    """Editable defaults; explicit decode arguments take precedence."""
+    cfg = bundled("experiment.json")
+    values = dict(temperature=cfg["temperature"],
+                  weight=cfg.get("weights", {}).get(str(k), .5),
+                  alpha=cfg.get("alpha", 2.) if kind == "ours" else 0.,
+                  beam=cfg.get("beam", 50))
+    values.update(cfg.get("baseline_decoding", {}).get(kind, {}).get(str(k), {}))
+    if kind == "ours" and k == 5 and prompt != "E":
+        values["weight"] = cfg.get("prompt_weights", {}).get(prompt, values["weight"])
+    return values
+
+
 def decode(
     work,
     kind,
     seed,
     k=5,
-    weight=0.5,
+    weight=None,
     temperature=None,
-    alpha=2.0,
-    beam=50,
+    alpha=None,
+    beam=None,
     prompt="E",
     split="test",
     control="brain",
@@ -229,6 +242,11 @@ def decode(
     """No reference prefix is used. All k-subsets are pooled within each seed."""
     from .lm import QwenScorer, nbest, PROMPTS
 
+    defaults = decoding_defaults(kind, k, prompt)
+    weight = defaults["weight"] if weight is None else weight
+    temperature = defaults["temperature"] if temperature is None else temperature
+    alpha = defaults["alpha"] if alpha is None else alpha
+    beam = defaults["beam"] if beam is None else beam
     if k not in range(1, 6) or beam < 1:
         raise ValueError("Use 1 <= k <= 5 and a positive beam width.")
     if partition not in {"Core", "Expanded", "Full"}:
@@ -236,7 +254,6 @@ def decode(
     if evidence not in {"both", "embedding", "individual"}:
         raise ValueError("evidence must be both, embedding, or individual")
     cfg = bundled("experiment.json")
-    temperature = cfg["temperature"] if temperature is None else temperature
     if temperature <= 0:
         raise ValueError("temperature must be positive")
     settings = dict(

@@ -4,7 +4,7 @@ from pathlib import Path
 import numpy as np
 from scipy.special import logsumexp
 from .io import bundled, read, write
-from .evaluation import decode, export, targets, natural_evaluation
+from .evaluation import decode, export, targets, natural_evaluation, decoding_defaults
 
 
 def aggregate(work):
@@ -132,7 +132,7 @@ def tune_baseline(work, kind, device, seeds=(0,)):
                     k,
                     1.0 if weight is None else weight,
                     t,
-                    0.0,
+                    decoding_defaults(kind, k)["alpha"],
                     split="dev",
                     control="lm" if weight is None else "brain",
                     device=device,
@@ -153,32 +153,33 @@ def tune_baseline(work, kind, device, seeds=(0,)):
     return result
 
 
-def tune_prompt(work, prompt, device):
+def tune_prompt(work, prompt, device, seed=0):
     path = Path(work) / "settings" / f"prompt_{prompt}.json"
     if path.exists():
-        return read(path)["weight"]
-    if prompt == "E":
-        return 0.5
+        saved = read(path)
+        if saved["seed"] != seed:
+            raise ValueError("Prompt tuning seed changed; use a fresh work directory.")
+        return saved["weight"]
     trials = []
     for weight in [0.0, 0.125, 0.25, 0.5, 1.0, 1.5, 2.0, 4.0, 8.0]:
         r = decode(
             work,
             "ours",
-            0,
+            seed,
             5,
             weight,
             prompt=prompt,
             split="dev",
             device=device,
-            tag=f"tune_prompt_{prompt}_{weight}",
+            tag=f"tune_prompt_{prompt}_{seed}_{weight}",
         )
         trials.append(dict(weight=weight, edits=r["metrics"]["Full"]["word_edits"]))
     selected = min(trials, key=lambda r: (r["edits"], r["weight"]))
-    write(path, dict(weight=selected["weight"], trials=trials, split="development", seed=0))
+    write(path, dict(weight=selected["weight"], trials=trials, split="development", seed=seed))
     return selected["weight"]
 
 
-def run(work, recipe, device="cuda", published_settings=False, seeds=(0,)):
+def run(work, recipe, device="cuda", tune=False, seeds=(0,)):
     """Sequential execution fits a single local GPU; completed stages are reused."""
     from .training import run as train
     from .analysis import clinical_diagnostics, word_diagnostics, future_context, timing_agreement
@@ -190,7 +191,7 @@ def run(work, recipe, device="cuda", published_settings=False, seeds=(0,)):
 
         metadata(work)
     elif recipe == "train":
-        for kind, spec in cfg["runs"].items():
+        for kind in cfg["models"]:
             for seed in seeds:
                 train(work, kind, seed, device)
     elif recipe == "natural":
@@ -200,19 +201,9 @@ def run(work, recipe, device="cuda", published_settings=False, seeds=(0,)):
     elif recipe == "clinical":
         decode(work, "ours", 0, 5, control="lm", device=device, tag="lm")
         for kind in ["ours", "joint", "stitched"]:
-            settings = (
-                None
-                if kind == "ours"
-                else bundled("baseline_settings.json")[kind]
-                if published_settings
-                else tune_baseline(work, kind, device, seeds)
-            )
+            settings = tune_baseline(work, kind, device, seeds) if tune else None
             for k in [1, 5]:
-                selected = (
-                    dict(temperature=cfg["temperature"], weight=cfg["weights"][str(k)])
-                    if settings is None
-                    else settings["selected"][str(k)]
-                )
+                selected = settings["selected"][str(k)] if settings else decoding_defaults(kind, k)
                 for seed in seeds:
                     decode(
                         work,
@@ -233,7 +224,7 @@ def run(work, recipe, device="cuda", published_settings=False, seeds=(0,)):
                         k,
                         1.0 if w is None else w,
                         selected["temperature"],
-                        2.0 if kind == "ours" else 0.0,
+                        decoding_defaults(kind, k)["alpha"],
                         control="lm" if w is None else "brain",
                         device=device,
                         tag=f"clinical_{kind}_{seed}_k{k}",
@@ -250,7 +241,6 @@ def run(work, recipe, device="cuda", published_settings=False, seeds=(0,)):
                     "ours",
                     seed,
                     k,
-                    weight=cfg["weights"][str(k)],
                     device=device,
                     tag=f"curve_k{k}_{seed}",
                 )
@@ -269,11 +259,8 @@ def run(work, recipe, device="cuda", published_settings=False, seeds=(0,)):
                 )
     elif recipe == "prompts":
         for prompt in ["A", "B", "C", "D", "E", "F"]:
-            weight = (
-                bundled("prompt_settings.json")[prompt]
-                if published_settings
-                else tune_prompt(work, prompt, device)
-            )
+            weight = (tune_prompt(work, prompt, device, seed=seeds[0]) if tune
+                      else decoding_defaults("ours", 5, prompt)["weight"])
             decode(
                 work,
                 "ours",
@@ -325,7 +312,7 @@ def run(work, recipe, device="cuda", published_settings=False, seeds=(0,)):
             "timing-agreement",
             "diagnostics",
         ]:
-            run(work, name, device, published_settings, seeds)
+            run(work, name, device, tune=tune, seeds=seeds)
     else:
         raise ValueError(recipe)
     aggregate(work)

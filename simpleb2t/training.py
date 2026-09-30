@@ -133,10 +133,7 @@ def run(work, kind, seed, device="cuda"):
     out.mkdir(parents=True, exist_ok=True)
     cfg = bundled("experiment.json")
     import copy
-    spec = copy.deepcopy(cfg["runs"][kind].get(str(seed), cfg["runs"][kind]["0"]))
-    if str(seed) not in cfg["runs"][kind]:
-        spec["training"]["seed"] = seed
-    config = spec["training"]
+    config = copy.deepcopy(cfg["models"][kind])
     protocol = validation_protocol(kind)
     if kind in NATURAL_CONTROLS and (out / "config.json").exists():
         previous = read(out / "config.json")

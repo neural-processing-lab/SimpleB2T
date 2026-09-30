@@ -93,14 +93,41 @@ def validation_vectors(model, kind, array, device, positions):
     return vectors, truth, donors
 
 
+NATURAL_CONTROLS = {"joint", "single_word", "shared_pulses", "independent_pulses", "timing"}
+
+
+def validation_protocol(kind):
+    if kind in NATURAL_CONTROLS:
+        return dict(vocabulary=bundled("vocabularies.json")["natural"], observations=1,
+                    inputs="natural_sentences", metric="top1_balanced_accuracy")
+    return dict(vocabulary=bundled("vocabularies.json")["clinical"], observations=5,
+                inputs="stitched" if kind == "stitched" else "word_groups",
+                metric="top1_balanced_accuracy")
+
+
+def validation_score(model, kind, array, device, positions, candidates, allowed):
+    if kind in NATURAL_CONTROLS:
+        # Keep every word as context; restrict only the scored targets and
+        # retrieval vocabulary, exactly as in natural_evaluation().
+        vectors = predict(model, kind, array, array.sequences, device, positions)
+        truth = [item["word"] for item in array.items]
+    else:
+        vectors, truth, _ = validation_vectors(model, kind, array, device, positions)
+        vectors = F.normalize(vectors.mean(1), dim=-1)
+    selected = [i for i, word in enumerate(truth) if word in allowed]
+    guesses = (vectors[selected] @ candidates.T).argmax(-1)
+    return metrics([truth[i] for i in selected], [allowed[i] for i in guesses])[
+        "top1_balanced_accuracy"]
+
+
 def atomic_torch(path, data):
     temporary = path.with_suffix(".tmp")
     torch.save(data, temporary)
     temporary.replace(path)
 
 
-def run(work, kind, seed, device="cuda", paper_schedule=True):
-    """Paper schedule retains historical stopping caps, without changing cosine T_max."""
+def run(work, kind, seed, device="cuda"):
+    """Train with validation-based early stopping; defaults are 30 epochs, patience 10."""
     work = Path(work)
     out = work / "models" / kind / str(seed)
     out.mkdir(parents=True, exist_ok=True)
@@ -109,8 +136,13 @@ def run(work, kind, seed, device="cuda", paper_schedule=True):
     spec = copy.deepcopy(cfg["runs"][kind].get(str(seed), cfg["runs"][kind]["0"]))
     if str(seed) not in cfg["runs"][kind]:
         spec["training"]["seed"] = seed
-        spec["stop_after_epoch"] = spec["training"]["max_epochs"]
     config = spec["training"]
+    protocol = validation_protocol(kind)
+    if kind in NATURAL_CONTROLS and (out / "config.json").exists():
+        previous = read(out / "config.json")
+        if previous.get("validation") != protocol:
+            raise ValueError("Validation protocol changed; use a fresh run directory. "
+                             "Old best checkpoints cannot be compared with the new metric.")
     if (out / "complete.json").exists():
         return read(out / "complete.json")
     torch.set_num_threads(8)
@@ -172,9 +204,9 @@ def run(work, kind, seed, device="cuda", paper_schedule=True):
         timing=timing,
         cnn=cfg["cnn"],
         transformer=cfg["transformer"],
-        paper_schedule=paper_schedule,
-        stop_after_epoch=spec["stop_after_epoch"],
     )
+    if kind in NATURAL_CONTROLS:
+        identity["validation"] = protocol
     write(out / "config.json", identity)
     epoch = cursor = bad = 0
     best = -float("inf")
@@ -220,10 +252,9 @@ def run(work, kind, seed, device="cuda", paper_schedule=True):
             ),
         )
 
-    allowed = bundled("vocabularies.json")["clinical"]
+    allowed = protocol["vocabulary"]
     candidates = F.normalize(emb[[lookup[w] for w in allowed]], dim=-1).cpu()
-    end = spec["stop_after_epoch"] if paper_schedule else config["max_epochs"]
-    for e in range(epoch, end):
+    for e in range(epoch, config["max_epochs"]):
         if bad >= config["patience"]:
             break
         if kind == "ours":
@@ -276,12 +307,7 @@ def run(work, kind, seed, device="cuda", paper_schedule=True):
                 )
                 write(out / "status.json", status)
                 print(status, flush=True)
-        v, truth, _ = validation_vectors(model, kind, val, device, positions)
-        selected = [i for i, w in enumerate(truth) if w in allowed]
-        pred = (F.normalize(v[selected].mean(1), dim=-1) @ candidates.T).argmax(-1)
-        score = metrics([truth[i] for i in selected], [allowed[i] for i in pred])[
-            "top1_balanced_accuracy"
-        ]
+        score = validation_score(model, kind, val, device, positions, candidates, allowed)
         if score > best:
             best = score
             bad = 0
@@ -306,6 +332,7 @@ def run(work, kind, seed, device="cuda", paper_schedule=True):
             )
         )
         write(out / "history.json", history)
+        print(dict(epoch=e + 1, validation_balanced_accuracy=score, best=best, bad_epochs=bad), flush=True)
         scheduler.step()
         cursor = 0
         loss_sum = loss_count = 0

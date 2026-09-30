@@ -34,7 +34,7 @@
           "mlp_hidden": 2048,
           "batch_size": 128,
           "lr": 0.0001,
-          "max_epochs": 50,
+          "max_epochs": 30,
           "patience": 10,
           "evaluation_vocabulary": "sentence_92",
           "evaluation_aggregation": "mean_of_5_predictions",
@@ -45,8 +45,7 @@
             "identical_candidates_threshold": 0.999,
             "reweigh_positives": true
           }
-        },
-        "stop_after_epoch": 19
+        }
       },
       "100": {
         "training": {
@@ -55,7 +54,7 @@
           "mlp_hidden": 2048,
           "batch_size": 128,
           "lr": 0.0001,
-          "max_epochs": 50,
+          "max_epochs": 30,
           "patience": 10,
           "evaluation_vocabulary": "sentence_92",
           "evaluation_aggregation": "mean_of_5_predictions",
@@ -66,8 +65,7 @@
             "identical_candidates_threshold": 0.999,
             "reweigh_positives": true
           }
-        },
-        "stop_after_epoch": 21
+        }
       },
       "200": {
         "training": {
@@ -76,7 +74,7 @@
           "mlp_hidden": 2048,
           "batch_size": 128,
           "lr": 0.0001,
-          "max_epochs": 50,
+          "max_epochs": 30,
           "patience": 10,
           "evaluation_vocabulary": "sentence_92",
           "evaluation_aggregation": "mean_of_5_predictions",
@@ -87,8 +85,7 @@
             "identical_candidates_threshold": 0.999,
             "reweigh_positives": true
           }
-        },
-        "stop_after_epoch": 19
+        }
       },
       "300": {
         "training": {
@@ -97,7 +94,7 @@
           "mlp_hidden": 2048,
           "batch_size": 128,
           "lr": 0.0001,
-          "max_epochs": 50,
+          "max_epochs": 30,
           "patience": 10,
           "evaluation_vocabulary": "sentence_92",
           "evaluation_aggregation": "mean_of_5_predictions",
@@ -108,8 +105,7 @@
             "identical_candidates_threshold": 0.999,
             "reweigh_positives": true
           }
-        },
-        "stop_after_epoch": 20
+        }
       },
       "400": {
         "training": {
@@ -118,7 +114,7 @@
           "mlp_hidden": 2048,
           "batch_size": 128,
           "lr": 0.0001,
-          "max_epochs": 50,
+          "max_epochs": 30,
           "patience": 10,
           "evaluation_vocabulary": "sentence_92",
           "evaluation_aggregation": "mean_of_5_predictions",
@@ -129,8 +125,7 @@
             "identical_candidates_threshold": 0.999,
             "reweigh_positives": true
           }
-        },
-        "stop_after_epoch": 18
+        }
       }
     },
     "joint": {
@@ -139,7 +134,7 @@
           "seed": 0,
           "lr": 0.0001,
           "batch_size": 128,
-          "max_epochs": 50,
+          "max_epochs": 30,
           "patience": 10,
           "loss": {
             "norm_kind": "y",
@@ -148,15 +143,14 @@
             "identical_candidates_threshold": 0.999,
             "reweigh_positives": true
           }
-        },
-        "stop_after_epoch": 24
+        }
       },
       "100": {
         "training": {
           "seed": 100,
           "lr": 0.0001,
           "batch_size": 128,
-          "max_epochs": 50,
+          "max_epochs": 30,
           "patience": 10,
           "loss": {
             "norm_kind": "y",
@@ -165,15 +159,14 @@
             "identical_candidates_threshold": 0.999,
             "reweigh_positives": true
           }
-        },
-        "stop_after_epoch": 18
+        }
       },
       "200": {
         "training": {
           "seed": 200,
           "lr": 0.0001,
           "batch_size": 128,
-          "max_epochs": 50,
+          "max_epochs": 30,
           "patience": 10,
           "loss": {
             "norm_kind": "y",
@@ -182,15 +175,14 @@
             "identical_candidates_threshold": 0.999,
             "reweigh_positives": true
           }
-        },
-        "stop_after_epoch": 20
+        }
       },
       "300": {
         "training": {
           "seed": 300,
           "lr": 0.0001,
           "batch_size": 128,
-          "max_epochs": 50,
+          "max_epochs": 30,
           "patience": 10,
           "loss": {
             "norm_kind": "y",
@@ -199,15 +191,14 @@
             "identical_candidates_threshold": 0.999,
             "reweigh_positives": true
           }
-        },
-        "stop_after_epoch": 18
+        }
       },
       "400": {
         "training": {
           "seed": 400,
           "lr": 0.0001,
           "batch_size": 128,
-          "max_epochs": 50,
+          "max_epochs": 30,
           "patience": 10,
           "loss": {
             "norm_kind": "y",
@@ -216,8 +207,7 @@
             "identical_candidates_threshold": 0.999,
             "reweigh_positives": true
           }
-        },
-        "stop_after_epoch": 20
+        }
       }
     },
     "single_word": {
@@ -226,7 +216,7 @@
           "seed": 0,
           "lr": 0.0001,
           "batch_size": 128,
-          "max_epochs": 50,
+          "max_epochs": 30,
           "patience": 10,
           "loss": {
             "norm_kind": "y",
@@ -235,15 +225,14 @@
             "identical_candidates_threshold": 0.999,
             "reweigh_positives": true
           }
-        },
-        "stop_after_epoch": 22
+        }
       },
       "100": {
         "training": {
           "seed": 100,
           "lr": 0.0001,
           "batch_size": 128,
-          "max_epochs": 50,
+          "max_epochs": 30,
           "patience": 10,
           "loss": {
             "norm_kind": "y",
@@ -252,15 +241,14 @@
             "identical_candidates_threshold": 0.999,
             "reweigh_positives": true
           }
-        },
-        "stop_after_epoch": 21
+        }
       },
       "200": {
         "training": {
           "seed": 200,
           "lr": 0.0001,
           "batch_size": 128,
-          "max_epochs": 50,
+          "max_epochs": 30,
           "patience": 10,
           "loss": {
             "norm_kind": "y",
@@ -269,15 +257,14 @@
             "identical_candidates_threshold": 0.999,
             "reweigh_positives": true
           }
-        },
-        "stop_after_epoch": 22
+        }
       },
       "300": {
         "training": {
           "seed": 300,
           "lr": 0.0001,
           "batch_size": 128,
-          "max_epochs": 50,
+          "max_epochs": 30,
           "patience": 10,
           "loss": {
             "norm_kind": "y",
@@ -286,15 +273,14 @@
             "identical_candidates_threshold": 0.999,
             "reweigh_positives": true
           }
-        },
-        "stop_after_epoch": 22
+        }
       },
       "400": {
         "training": {
           "seed": 400,
           "lr": 0.0001,
           "batch_size": 128,
-          "max_epochs": 50,
+          "max_epochs": 30,
           "patience": 10,
           "loss": {
             "norm_kind": "y",
@@ -303,8 +289,7 @@
             "identical_candidates_threshold": 0.999,
             "reweigh_positives": true
           }
-        },
-        "stop_after_epoch": 23
+        }
       }
     },
     "shared_pulses": {
@@ -313,7 +298,7 @@
           "seed": 0,
           "lr": 0.0001,
           "batch_size": 128,
-          "max_epochs": 50,
+          "max_epochs": 30,
           "patience": 10,
           "loss": {
             "norm_kind": "y",
@@ -322,15 +307,14 @@
             "identical_candidates_threshold": 0.999,
             "reweigh_positives": true
           }
-        },
-        "stop_after_epoch": 19
+        }
       },
       "100": {
         "training": {
           "seed": 100,
           "lr": 0.0001,
           "batch_size": 128,
-          "max_epochs": 50,
+          "max_epochs": 30,
           "patience": 10,
           "loss": {
             "norm_kind": "y",
@@ -339,15 +323,14 @@
             "identical_candidates_threshold": 0.999,
             "reweigh_positives": true
           }
-        },
-        "stop_after_epoch": 25
+        }
       },
       "200": {
         "training": {
           "seed": 200,
           "lr": 0.0001,
           "batch_size": 128,
-          "max_epochs": 50,
+          "max_epochs": 30,
           "patience": 10,
           "loss": {
             "norm_kind": "y",
@@ -356,15 +339,14 @@
             "identical_candidates_threshold": 0.999,
             "reweigh_positives": true
           }
-        },
-        "stop_after_epoch": 23
+        }
       },
       "300": {
         "training": {
           "seed": 300,
           "lr": 0.0001,
           "batch_size": 128,
-          "max_epochs": 50,
+          "max_epochs": 30,
           "patience": 10,
           "loss": {
             "norm_kind": "y",
@@ -373,15 +355,14 @@
             "identical_candidates_threshold": 0.999,
             "reweigh_positives": true
           }
-        },
-        "stop_after_epoch": 19
+        }
       },
       "400": {
         "training": {
           "seed": 400,
           "lr": 0.0001,
           "batch_size": 128,
-          "max_epochs": 50,
+          "max_epochs": 30,
           "patience": 10,
           "loss": {
             "norm_kind": "y",
@@ -390,8 +371,7 @@
             "identical_candidates_threshold": 0.999,
             "reweigh_positives": true
           }
-        },
-        "stop_after_epoch": 19
+        }
       }
     },
     "independent_pulses": {
@@ -400,7 +380,7 @@
           "seed": 0,
           "lr": 0.0001,
           "batch_size": 128,
-          "max_epochs": 50,
+          "max_epochs": 30,
           "patience": 10,
           "loss": {
             "norm_kind": "y",
@@ -409,15 +389,14 @@
             "identical_candidates_threshold": 0.999,
             "reweigh_positives": true
           }
-        },
-        "stop_after_epoch": 7
+        }
       },
       "100": {
         "training": {
           "seed": 100,
           "lr": 0.0001,
           "batch_size": 128,
-          "max_epochs": 50,
+          "max_epochs": 30,
           "patience": 10,
           "loss": {
             "norm_kind": "y",
@@ -426,15 +405,14 @@
             "identical_candidates_threshold": 0.999,
             "reweigh_positives": true
           }
-        },
-        "stop_after_epoch": 8
+        }
       },
       "200": {
         "training": {
           "seed": 200,
           "lr": 0.0001,
           "batch_size": 128,
-          "max_epochs": 50,
+          "max_epochs": 30,
           "patience": 10,
           "loss": {
             "norm_kind": "y",
@@ -443,15 +421,14 @@
             "identical_candidates_threshold": 0.999,
             "reweigh_positives": true
           }
-        },
-        "stop_after_epoch": 6
+        }
       },
       "300": {
         "training": {
           "seed": 300,
           "lr": 0.0001,
           "batch_size": 128,
-          "max_epochs": 50,
+          "max_epochs": 30,
           "patience": 10,
           "loss": {
             "norm_kind": "y",
@@ -460,15 +437,14 @@
             "identical_candidates_threshold": 0.999,
             "reweigh_positives": true
           }
-        },
-        "stop_after_epoch": 8
+        }
       },
       "400": {
         "training": {
           "seed": 400,
           "lr": 0.0001,
           "batch_size": 128,
-          "max_epochs": 50,
+          "max_epochs": 30,
           "patience": 10,
           "loss": {
             "norm_kind": "y",
@@ -477,8 +453,7 @@
             "identical_candidates_threshold": 0.999,
             "reweigh_positives": true
           }
-        },
-        "stop_after_epoch": 5
+        }
       }
     },
     "timing": {
@@ -487,8 +462,8 @@
           "seed": 0,
           "lr": 0.0001,
           "batch_size": 128,
-          "max_epochs": 50,
-          "patience": 3,
+          "max_epochs": 30,
+          "patience": 10,
           "loss": {
             "norm_kind": "y",
             "temperature": true,
@@ -496,16 +471,15 @@
             "identical_candidates_threshold": 0.999,
             "reweigh_positives": true
           }
-        },
-        "stop_after_epoch": 12
+        }
       },
       "100": {
         "training": {
           "seed": 100,
           "lr": 0.0001,
           "batch_size": 128,
-          "max_epochs": 50,
-          "patience": 3,
+          "max_epochs": 30,
+          "patience": 10,
           "loss": {
             "norm_kind": "y",
             "temperature": true,
@@ -513,16 +487,15 @@
             "identical_candidates_threshold": 0.999,
             "reweigh_positives": true
           }
-        },
-        "stop_after_epoch": 11
+        }
       },
       "200": {
         "training": {
           "seed": 200,
           "lr": 0.0001,
           "batch_size": 128,
-          "max_epochs": 50,
-          "patience": 3,
+          "max_epochs": 30,
+          "patience": 10,
           "loss": {
             "norm_kind": "y",
             "temperature": true,
@@ -530,16 +503,15 @@
             "identical_candidates_threshold": 0.999,
             "reweigh_positives": true
           }
-        },
-        "stop_after_epoch": 10
+        }
       },
       "300": {
         "training": {
           "seed": 300,
           "lr": 0.0001,
           "batch_size": 128,
-          "max_epochs": 50,
-          "patience": 3,
+          "max_epochs": 30,
+          "patience": 10,
           "loss": {
             "norm_kind": "y",
             "temperature": true,
@@ -547,16 +519,15 @@
             "identical_candidates_threshold": 0.999,
             "reweigh_positives": true
           }
-        },
-        "stop_after_epoch": 11
+        }
       },
       "400": {
         "training": {
           "seed": 400,
           "lr": 0.0001,
           "batch_size": 128,
-          "max_epochs": 50,
-          "patience": 3,
+          "max_epochs": 30,
+          "patience": 10,
           "loss": {
             "norm_kind": "y",
             "temperature": true,
@@ -564,8 +535,7 @@
             "identical_candidates_threshold": 0.999,
             "reweigh_positives": true
           }
-        },
-        "stop_after_epoch": 12
+        }
       }
     },
     "stitched": {
@@ -573,7 +543,7 @@
         "training": {
           "lr": 0.0001,
           "batch_size": 128,
-          "max_epochs": 50,
+          "max_epochs": 30,
           "patience": 10,
           "loss": {
             "norm_kind": "y",
@@ -583,14 +553,13 @@
             "reweigh_positives": true
           },
           "seed": 0
-        },
-        "stop_after_epoch": 17
+        }
       },
       "100": {
         "training": {
           "lr": 0.0001,
           "batch_size": 128,
-          "max_epochs": 50,
+          "max_epochs": 30,
           "patience": 10,
           "loss": {
             "norm_kind": "y",
@@ -600,14 +569,13 @@
             "reweigh_positives": true
           },
           "seed": 100
-        },
-        "stop_after_epoch": 13
+        }
       },
       "200": {
         "training": {
           "lr": 0.0001,
           "batch_size": 128,
-          "max_epochs": 50,
+          "max_epochs": 30,
           "patience": 10,
           "loss": {
             "norm_kind": "y",
@@ -617,8 +585,7 @@
             "reweigh_positives": true
           },
           "seed": 200
-        },
-        "stop_after_epoch": 18
+        }
       }
     }
   },

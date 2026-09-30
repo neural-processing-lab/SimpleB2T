@@ -43,11 +43,6 @@ def main():
         required=True,
     )
     p.add_argument("--seed", type=int, default=0)
-    p.add_argument(
-        "--full-patience",
-        action="store_true",
-        help="Ignore historical manual-stop caps; this is not the exact paper schedule",
-    )
     p = sub.add_parser("run", help="Run a named paper recipe, skipping completed stages")
     p.add_argument("--seeds", type=int, nargs="+", default=[0])
     p.add_argument(
@@ -91,7 +86,7 @@ def main():
     elif args.command == "train":
         from .training import run
 
-        run(args.work, args.model, args.seed, args.device, not args.full_patience)
+        run(args.work, args.model, args.seed, args.device)
     elif args.command in ["run", "summarize"]:
         from .experiments import run, aggregate
 

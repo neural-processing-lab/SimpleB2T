@@ -198,7 +198,6 @@ def test_full_training_resume_restores_optimizer_and_rng(tmp_path, monkeypatch):
                         "max_epochs": 3,
                         "patience": 10,
                     },
-                    "stop_after_epoch": 3,
                 }
             }
         },

@@ -60,3 +60,5 @@ The split, word targets, and benchmark assignments are included. Recordings and 
 [CC BY-NC 4.0](LICENSE). The CNN, Transformer wrapper, and D-SigLIP loss derive from the implementation associated with d’Ascoli et al., *Towards decoding individual words from non-invasive brain recordings*. Dataset and model credits are in [third-party notices](THIRD_PARTY_NOTICES.md).
 
 Data loading uses [PNPL](https://github.com/neural-processing-lab/pnpl): its `ClinicalCommunication` dataset supplies the benchmark and word windows. The optional other-subject analysis uses PNPL’s regular LibriBrain100 file access with the same preprocessing. Recordings are cached once; overlapping windows are extracted when needed.
+
+Training defaults to at most 30 epochs, stopping after 10 consecutive epochs without improved validation balanced accuracy. The best validation checkpoint is used for evaluation.

@@ -1,6 +1,10 @@
 # Third-party components and data
 
-The root LICENSE is Attribution–NonCommercial 4.0 International, inherited from the original neural-decoding implementation. Existing copyright notices in the vendored files are retained. The new reproduction scripts are provided under the same license. Public third-party credits and licenses are retained.
+Original SimpleB2T code and documentation are licensed under [MIT](LICENSE).
+The inherited code under `simpleb2t/vendor/`, including our modifications to those
+files, remains under [CC BY-NC 4.0](simpleb2t/vendor/LICENSE). Its copyright notices
+are retained. The MIT grant does not apply to these components or override their
+non-commercial restriction. Third-party data and model terms remain as listed below.
 
 - The CNN, Transformer wrapper and D-SigLIP primitives in `simpleb2t/vendor/` derive from the public neuraltrain / sentence-decoding implementation associated with d'Ascoli et al., “Towards decoding individual words from non-invasive brain recordings.” Copyright Meta Platforms, Inc. and affiliates; CC BY-NC 4.0. Unused training frameworks and dataset integrations are excluded. The channel-position helper is reduced to the original invalid-position constant. An unsupported, unused EEGNet aggregation branch raises an explicit error rather than importing another architecture.
 - LibriBrain / LibriBrain2 public recordings and linguistic annotations: https://huggingface.co/datasets/pnpl/LibriBrain and https://huggingface.co/datasets/pnpl/LibriBrain2 ; CC BY-NC 4.0. The exact revisions and file hashes are in `simpleb2t/assets/downloads.json`. Raw recordings are not redistributed here.

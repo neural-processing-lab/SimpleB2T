@@ -1,21 +1,23 @@
-# Removing Timing Shortcuts Improves Non-Invasive Brain-to-Text
+## Removing Timing Shortcuts Improves Non-Invasive Brain-to-Text
 
-[![arXiv](https://img.shields.io/badge/arXiv-coming%20soon-b31b1b.svg)](#citation)
+[![arXiv](https://img.shields.io/badge/arXiv-2609.40359-b31b1b.svg)](https://arxiv.org/abs/2609.40359)
 [![Notebooks](https://img.shields.io/badge/Notebooks-get%20started-F37626.svg?logo=jupyter&logoColor=white)](#start-here)
-[![License: CC BY-NC 4.0](https://img.shields.io/badge/License-CC%20BY--NC%204.0-lightgrey.svg)](LICENSE)
+[![License: MIT + third-party terms](https://img.shields.io/badge/License-MIT%20%2B%20third--party%20terms-blue.svg)](#license)
 
-This repository contains the experiments for the paper "Removing Timing Shortcuts Improves Non-Invasive Brain-to-Text".
+This repository contains the experiments for the paper "Removing Timing Shortcuts Improves Non-Invasive Brain-to-Text". We show that brain-to-text models can guess words from timing clues leaked in the experimental setup, and that removing this shortcut helps it better decode speech from their brain activity.
 
-The code is organised around two notebooks. They explain the ideas, train the models, and let you try the main experiments on LibriBrain100. Everything runs locally, with one training seed by default.
+**Paper:** [arXiv:2609.40359](https://arxiv.org/abs/2609.40359)
 
 ```bibtex
-@misc{simpleb2t,
+@article{jayalath2026shortcuts,
   title  = {Removing Timing Shortcuts Improves Non-Invasive Brain-to-Text},
-  author = {AUTHOR LIST},
-  year   = {YEAR},
-  note   = {Preprint. arXiv identifier forthcoming.}
+  author={Jayalath, Dulhan and Parker Jones, Oiwi},
+  journal={arXiv preprint arXiv:2609.40359},
+  year={2026}
 }
 ```
+
+The code is organised around two notebooks. They explain the ideas, train the models, and let you try the main experiments on LibriBrain100. Everything runs locally, with one training seed by default.
 
 ## Start here
 
@@ -55,10 +57,8 @@ The full workflow needs a CUDA GPU and roughly **200 GiB of free disk space**. W
 
 The split, word targets, and benchmark assignments are included. Recordings and Qwen weights download when needed. Training saves checkpoints and resumes interrupted runs; predictions and scores are saved under `runs/`. Use a new `WORK` directory when changing an experiment.
 
+Data loading uses [PNPL](https://github.com/neural-processing-lab/pnpl): its `ClinicalCommunication` dataset supplies the benchmark and word windows. The optional other-subject analysis uses PNPL’s regular LibriBrain100 file access with the same preprocessing.
+
 ## License
 
-[CC BY-NC 4.0](LICENSE). The CNN, Transformer wrapper, and D-SigLIP loss derive from the implementation associated with d’Ascoli et al., *Towards decoding individual words from non-invasive brain recordings*. Dataset and model credits are in [third-party notices](THIRD_PARTY_NOTICES.md).
-
-Data loading uses [PNPL](https://github.com/neural-processing-lab/pnpl): its `ClinicalCommunication` dataset supplies the benchmark and word windows. The optional other-subject analysis uses PNPL’s regular LibriBrain100 file access with the same preprocessing. Recordings are cached once; overlapping windows are extracted when needed.
-
-Training defaults to at most 30 epochs, stopping after 10 consecutive epochs without improved validation balanced accuracy. The best validation checkpoint is used for evaluation.
+Original code and documentation are [MIT licensed](LICENSE). The inherited CNN, Transformer wrapper, and D-SigLIP implementation in `simpleb2t/vendor/` remain [CC BY-NC 4.0](simpleb2t/vendor/LICENSE), including the non-commercial restriction. Dataset and model terms are listed in [third-party notices](THIRD_PARTY_NOTICES.md).

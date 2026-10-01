@@ -8,11 +8,14 @@ version = "0.1.0"
 description = "Local LibriBrain100 experiments for isolated word decoding and overlap controls"
 readme = "README.md"
 requires-python = ">=3.11,<3.13"
-license = {file = "LICENSE"}
+license = {text = "MIT for original code; CC-BY-NC-4.0 for vendored components; see THIRD_PARTY_NOTICES.md for data terms."}
 dynamic = ["dependencies"]
 
 [project.scripts]
 simpleb2t = "simpleb2t.__main__:main"
+
+[tool.setuptools]
+license-files = ["LICENSE", "THIRD_PARTY_NOTICES.md", "simpleb2t/vendor/LICENSE"]
 
 [tool.setuptools.dynamic]
 dependencies = {file = ["requirements.txt"]}
@@ -22,6 +25,7 @@ include = ["simpleb2t*"]
 
 [tool.setuptools.package-data]
 simpleb2t = ["assets/*"]
+"simpleb2t.vendor" = ["LICENSE"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

@@ -4,7 +4,7 @@
 [![Notebooks](https://img.shields.io/badge/Notebooks-get%20started-F37626.svg?logo=jupyter&logoColor=white)](#start-here)
 [![License: MIT + third-party terms](https://img.shields.io/badge/License-MIT%20%2B%20third--party%20terms-blue.svg)](#license)
 
-This repository contains the experiments for the paper "Removing Timing Shortcuts Improves Non-Invasive Brain-to-Text". We show that brain-to-text models can guess words from timing clues leaked in the experimental setup, and that removing this shortcut helps it better decode speech from their brain activity.
+This repository contains the experiments for the paper "Removing Timing Shortcuts Improves Non-Invasive Brain-to-Text". We show that brain-to-text models can guess words from timing clues leaked in the experimental setup, and that removing this shortcut improves decoding speech from brain activity.
 
 **Paper:** [arXiv:2609.40359](https://arxiv.org/abs/2609.40359)
 
